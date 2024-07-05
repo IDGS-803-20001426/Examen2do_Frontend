@@ -1,0 +1,54 @@
+<div class="container py-3">
+    <div class="formulario-contacto">
+    <h2 class="text-center subtitulo">Busca Tus Guitarras Favoritas</h2>
+    <div class="mb-2">
+        <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Búsqueda"
+        [(ngModel)]="textoBusqueda" (input)="buscarGuitarras()">
+    </div>
+    <div class="d-flex gap-3 justify-content-center mb-1">
+        <ng-container *ngIf="listaCategorias.length > 0; else noCategorias">
+            <button *ngFor="let categoria of listaCategorias" class="boton-categorias"
+                    (click)="filtrarPorCategoria(categoria.id)">
+                {{ categoria.nombre }}
+            </button>
+        </ng-container>
+        <button *ngIf="listaCategorias.length > 0" class="boton-categorias" (click)="filtrarPorCategoria(0)">
+            Limpiar Filtros
+          </button>
+        <ng-template #noCategorias>
+            <p>No hay categorías por mostrar...</p>
+        </ng-template>
+    </div>
+</div>
+
+
+    <div class="container mt-5">
+        <h2 class="text-center subtitulo">Nuestra Colección</h2>
+      
+        <h1 *ngIf="!isResultLoaded">Cargando Datos.....</h1>
+      
+        <div class="row mt-5 gap-4">
+      
+          @for (guitarra of listaGuitarras; track guitarra.id) {
+            <div class="col-md-6 col-lg-4 my-4 row align-items-center">
+              <div class="col-4">
+                  <img class="img-fluid" src={{guitarra.imagen}} alt="imagen guitarra" />
+              </div>
+              <div class="col-8">
+                  <h3 class="text-black fs-4 fw-bold text-uppercase">{{guitarra.nombre}}</h3>
+                  <p>{{guitarra.descripcion}}</p>
+                  <p>{{guitarra.categoria}}</p>
+                  <p class="fw-black subtitulo fs-3">${{guitarra.precio}}</p>
+                  <button 
+                      type="button"
+                      class="btn btn-dark w-100 fw-bold"
+                  >Agregar al Carrito</button>
+              </div>
+            </div>
+          } @empty {
+            <p class="text-center py-5">No hay guitarras por mostrar...</p>
+          }
+        </div>
+    </div>
+</div>
+
